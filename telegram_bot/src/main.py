@@ -5,10 +5,7 @@ from telegram.ext import ApplicationBuilder
 from commands import start_handler, unknown_handler
 from config import TELEGRAM_BOT_TOKEN
 
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
-)
+logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
 
 def main() -> None:
@@ -20,5 +17,5 @@ def main() -> None:
     application.run_polling()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
