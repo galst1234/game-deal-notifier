@@ -1,0 +1,21 @@
+name: Mypy
+
+on: [ push, pull_request ]
+
+jobs:
+  mypy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          pyproject-file: 'telegram_bot/pyproject.toml'
+
+      - name: Mypy
+        working-directory: telegram_bot
+        run: uv run --frozen mypy .

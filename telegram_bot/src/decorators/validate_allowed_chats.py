@@ -1,4 +1,6 @@
+from collections.abc import Callable
 from functools import wraps
+from typing import Any
 
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -7,9 +9,14 @@ from config import ALLOWED_CHATS
 
 
 # Potentially replace this with an automatic thing that happens on `Application.add_handler`
-def validate_allowed_chats_async(func: callable) -> callable:
+def validate_allowed_chats_async(
+        func: Callable[[Update, ContextTypes.DEFAULT_TYPE], Any],
+) -> Callable[[Update, ContextTypes.DEFAULT_TYPE], Any]:
     @wraps(func)
     async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+        if update.effective_chat is None:
+            return await func(update, context)
+
         chat_id: int = update.effective_chat.id
         # Temporary solution, this should be replaced with a proper DB
         if chat_id in ALLOWED_CHATS:

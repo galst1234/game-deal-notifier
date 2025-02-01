@@ -6,7 +6,8 @@ from decorators import validate_allowed_chats_async
 
 @validate_allowed_chats_async
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="Currently under construction 🏗")
+    if update.effective_chat is not None:
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="Currently under construction 🏗")
 
 
 start_handler = CommandHandler("start", start)
