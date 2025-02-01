@@ -1,7 +1,7 @@
 from telegram import Update
 from telegram.ext import ContextTypes, MessageHandler, filters
 
-from decorators import validate_allowed_chats_async
+from utils import validate_allowed_chats_async
 
 
 @validate_allowed_chats_async
