@@ -1,3 +1,4 @@
+import logging
 from collections.abc import Callable
 from functools import wraps
 from typing import Any
@@ -6,6 +7,8 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from config import ALLOWED_CHATS
+
+logger = logging.getLogger(__name__)
 
 
 # Potentially replace this with an automatic thing that happens on `Application.add_handler`
@@ -22,6 +25,7 @@ def validate_allowed_chats_async(
         if chat_id in ALLOWED_CHATS:
             return await func(update, context)
         else:
+            logger.info(f"Unauthorized chat id: {chat_id}")
             # Ideally, I want to implement an option to request access, that will send me a message allowing me to
             # approve or deny access, updating the DB accordingly
             await context.bot.send_message(
