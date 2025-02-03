@@ -8,4 +8,4 @@ repos:
     rev: v1.14.1
     hooks:
       - id: mypy
-        additional_dependencies: [ "types-requests>=2.32,<3" ]
+        additional_dependencies: [ "types-requests>=2.32,<3", "types-pytz>=2024.2" ]
