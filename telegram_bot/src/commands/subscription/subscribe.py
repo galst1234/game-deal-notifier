@@ -8,6 +8,7 @@ from telegram.ext import CallbackContext, CommandHandler, ContextTypes
 from commands.subscription.common import NOTIFICATION_NAME_FORMAT
 from config import TIMEZONE
 from isthereanydeal.giveaways import get_current_giveaways
+from isthereanydeal.utils import format_deals_list
 from utils import validate_allowed_chats_async
 from utils.get_next_time import get_next_time
 
@@ -47,11 +48,8 @@ async def _send_notification(context: CallbackContext) -> None:
         return
 
     giveaways = get_current_giveaways()
-    if giveaways:
-        message = "Current giveaways:\n"
-        for deal in giveaways:
-            message += f"- [{deal.title}]({deal.deal.url})\n"
-
+    message = format_deals_list(giveaways, "Current giveaways:")
+    if message:
         await context.bot.send_message(
             chat_id=job.chat_id,
             text=message,
