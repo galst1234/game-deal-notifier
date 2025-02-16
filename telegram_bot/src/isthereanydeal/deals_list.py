@@ -44,7 +44,7 @@ class ItemType(Enum):
 class DealItem(BaseModel):
     id: UUID
     title: str
-    type: ItemType
+    type: ItemType | None
     mature: bool
     deal: Deal
 
